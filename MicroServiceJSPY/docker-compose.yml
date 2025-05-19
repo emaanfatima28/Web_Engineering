@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "3000:3000"
+    depends_on:
+      - user-service
+      - ml-service
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "3001:3001"
+    depends_on:
+        - user-mongo
+
+  ml-service:
+    build: ./ml-service
+    ports:
+      - "3002:3002"
+    depends_on:
+        - ml-mongo
+  
+  user-mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - user-data:/data/db
+  ml-mongo:
+    image: mongo
+    ports:
+      - "27018:27017"
+    volumes:
+      - ml-data:/data/db
+
+volumes:
+  user-data:
+  ml-data:

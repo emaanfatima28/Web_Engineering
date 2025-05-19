@@ -1,0 +1,6 @@
+FROM py:3.12.6
+WORKDIR /app
+COPY . .
+RUN pip install fastapi uvicorn pymongo
+EXPOSE 3002
+CMD ["uvicorn", "main:app", "--host", "0.0.0", "--port", "3002"]
