@@ -1,5 +1,5 @@
 const express = require('express');
-const { authenticateToken, authorizationRole } = require('./auth.js');
+const { authenticateToken, authorizationRole } = require('./auth');
 
 const router = express.Router();
 

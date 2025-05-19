@@ -1,31 +1,32 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-const authRoutes = require('./protected.js');
-const { users } = require('./auth.js');
+const cors = require('cors');
+const authRoutes = require('./protected');
+const users = require('./users');
 
 dotenv.config();
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
-
     const user = users.find(user => user.name === username && user.password === password);
 
     if (!user) {
-        return res.status(401).send('Invalid username or password');
+        return res.status(401).json({ message: 'Invalid username or password' });
     }
 
     const token = jwt.sign(
-        { username: user.name, role: user.role },
+        { name: user.name, role: user.role },
         process.env.JWT_SECRET,
         { expiresIn: '1h' }
     );
-
+console.log(`Token generated for user ${user.name}: ${token}`);
     res.json({ token });
 });
 

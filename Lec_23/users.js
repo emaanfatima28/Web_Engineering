@@ -1,4 +1,4 @@
-user = [
+const users = [
     {
         id: 1,
         name: "Emaan",
@@ -17,4 +17,6 @@ user = [
         password: "maala",
         role: "viewer"
     }
-]
+];
+
+module.exports = users;
